@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?><Drawing
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   name="Untitled" mark="4.5">
+
+<box id="0" name="Unit" mark="0.0">
+  <location x="87.0" y="69.0"/>
+  <size width="80.0" height="40.0"/>
+  <comment></comment>
+</box>
+
+<box id="1" name="Employee" mark="0.0">
+  <location x="326.0" y="72.0"/>
+  <size width="80.0" height="40.0"/>
+  <comment></comment>
+</box>
+
+<link id="0" mark="0.0">
+  <moveableName name="PreparedBy">
+    <point x="236" y="95"/>
+  </moveableName>
+  <converseName name="converseName"/>
+  <box1 id="0"/>
+  <box2 id="1"/>
+  <bendPoints>
+    <point x="127.0" y="89.0"/>
+    <point x="167.0" y="89.5020920502092"/>
+    <point x="246.5" y="90.5"/>
+    <point x="326.0" y="91.4979079497908"/>
+    <point x="366.0" y="92.0"/>
+  </bendPoints>
+  <midMoved value="false"/>
+  <box1EndAdornments blob="Closed" crowsfoot="Yes"/>
+  <box2EndAdornments blob="Open" crowsfoot="No"/>
+  <comment></comment>
+</link>
+</Drawing>
