@@ -5,6 +5,6 @@
 <box id="0" name="Client" mark="0.0">
   <location x="33.0" y="43.0"/>
   <size width="80.0" height="40.0"/>
-  <comment></comment>
+  <comment>A comment</comment>
 </box> 
 </Drawing>
