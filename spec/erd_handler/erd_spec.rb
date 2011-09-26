@@ -26,6 +26,9 @@ module ErdHandler
         erd.mark.should == 4.5
         erd.should have(2).vertices
         erd.should have(1).edges
+        
+        erd.vertices[0].neighbours.should include(erd.vertices[1])
+        erd.vertices[1].neighbours.should include(erd.vertices[0])        
       end
       
       it "reads and creates a box with a self-loop"
