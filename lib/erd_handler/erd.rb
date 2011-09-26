@@ -17,6 +17,9 @@ module ErdHandler
       doc.elements.each('Drawing/link') do |link_element|
         self << Link.new(link_element, self.vertices)
       end
+      doc.elements.each('Drawing/selfLink') do |link_element|
+        self << Link.new(link_element, self.vertices)
+      end
       self
     end
   end

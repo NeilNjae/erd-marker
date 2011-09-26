@@ -10,5 +10,5 @@ group :development do
   gem "bundler", "~> 1.0.0"
   gem "rdoc"
   gem "rake"
-  gem "graph.njae", "0.2.1"
+  gem "graph.njae", "0.2.3"
 end
