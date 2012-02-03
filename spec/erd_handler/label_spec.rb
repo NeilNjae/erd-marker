@@ -7,6 +7,8 @@ module ErdHandler
         test_label = "Test label"
         l1 = Label.new test_label
         l1.original.should == test_label
+        l1 = Label.new
+        l1.original.should == ""
       end
     end # original
 
@@ -144,6 +146,29 @@ module ErdHandler
         l1.processed.should == l2.processed
       end
     end # tidy
+    
+    describe "#levenshtein" do
+      it "calculates the Levenshtein distance of the processed string" do
+        l1 = Label.new "Fred"
+        l1.levenshtein("Fred").should == 0
+        l1.levenshtein("Free").should == 1
+        l1.levenshtein("").should == 4
+        l2 = Label.new
+        l2.levenshtein("Free").should == 4
+        l2.levenshtein("").should == 0
+        l3 = Label.new "meilenstein"
+        l3.levenshtein("levenshtein").should == 4
+        l4 = Label.new "testingLabeller string, he_pontificated"
+        l4.tidy.levenshtein("testlabelstringhepontif").should == 0
+        l4.tidy.levenshtein("testlabelXstringhepontif").should == 1
+      end
+      
+      it "calculates the Levenshtein distance between Labels" do
+        l1 = Label.new "meilenstein"
+        l2 = Label.new "levenshtein"
+        l1.levenshtein(l2).should == 4
+      end
+    end
     
   end
 end
