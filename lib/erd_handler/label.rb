@@ -12,7 +12,7 @@ class Label
       regexp = opts
       split_camel_case = true
     else
-      regexp = opts[:regexp] || /[ _,.-]+/
+      regexp = opts[:regexp] || /[\t\n _,.-]+/
       if opts.has_key? :camel_case
         split_camel_case = opts[:camel_case]
       else

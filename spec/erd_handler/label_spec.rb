@@ -84,9 +84,9 @@ module ErdHandler
       end
       
       it "splits the original using a default regexp" do
-        l1 = Label.new "Test label_string"
+        l1 = Label.new "Test label_string\tfred"
         l1.split
-        l1.processed.should == ["Test", "label", "string"]
+        l1.processed.should == ["Test", "label", "string", "fred"]
       end
       
       it "splits the original on camel case by default" do
@@ -142,7 +142,6 @@ module ErdHandler
         l1.tidy
         l2.split.downcase.stem
         l1.processed.should == l2.processed
-
       end
     end # tidy
     
