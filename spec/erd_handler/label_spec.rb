@@ -58,6 +58,30 @@ module ErdHandler
         l2.processed.should == ["TestLabel"]
         l2.original.should == "TestLabel"
       end
+
+      it "splits the original on numbers" do
+        l1 = Label.new "Test123Label"
+        l1.split :numbers => true
+        l1.processed.should == ["Test", "123", "Label"]
+        l1.original.should == "Test123Label"
+
+        l2 = Label.new "test1label"
+        l2.split :numbers => true
+        l2.processed.should == ["test", "1", "label"]
+        l2.original.should == "test1label"
+      end
+
+      it "doesn't split the original on numbers if asked not to" do
+        l1 = Label.new "Test123Label"
+        l1.split :numbers => false
+        l1.processed.should == ["Test123Label"]
+        l1.original.should == "Test123Label"
+        
+        l2 = Label.new "Test123Label"
+        l2.split :numbers => nil
+        l2.processed.should == ["Test123Label"]
+        l2.original.should == "Test123Label"
+      end
       
       it "splits the original using a default regexp" do
         l1 = Label.new "Test label_string"
@@ -72,19 +96,26 @@ module ErdHandler
         l1.original.should == "TestLabel"
       end
 
-      it "splits the original on punctuation and camel case by default" do
-        l1 = Label.new "TestLabel is_split, he,said"
+      it "splits the original on numbers by default" do
+        l1 = Label.new "Test123Label"
         l1.split
-        l1.processed.should == ["Test", "Label", "is", "split", "he", "said"]
-        l1.original.should == "TestLabel is_split, he,said"
+        l1.processed.should == ["Test", "123", "Label"]
+        l1.original.should == "Test123Label"
+      end
+     
+      it "splits the original on punctuation, whitespace, camel case, and numbers by default" do
+        l1 = Label.new "TestLabel is_split, 123 he,said456Fred"
+        l1.split
+        l1.processed.should == ["Test", "Label", "is", "split","123", "he", "said", "456", "Fred"]
+        l1.original.should == "TestLabel is_split, 123 he,said456Fred"
       end
 
       it "is idempotent" do
-        l1 = Label.new "TestLabel is_split, he,said"
+        l1 = Label.new "TestLabel is_split, 123 he,said456Fred"
         res1 = l1.split.dup
         res2 = l1.split
         res1.processed.should == res2.processed
-        l1.original.should == "TestLabel is_split, he,said"
+        l1.original.should == "TestLabel is_split, 123 he,said456Fred"
       end
     end # split
 

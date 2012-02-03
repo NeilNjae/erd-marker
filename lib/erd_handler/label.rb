@@ -18,6 +18,11 @@ class Label
       else
         split_camel_case = true
       end
+      if opts.has_key? :numbers
+        split_numbers = opts[:numbers]
+      else
+        split_numbers = true
+      end
     end
     @processed = @processed.map do |segment|
       segment.split(regexp)
@@ -25,7 +30,13 @@ class Label
     
     if split_camel_case
       @processed = @processed.map do |segment|
-        segment.split(/(?=[A-Z])/)
+        segment.split(/(?<=[a-z])(?=[A-Z])/)
+      end.flatten
+    end
+    
+    if split_numbers
+      @processed = @processed.map do |segment|
+        segment.split(/(?:(?<!\d)(?=\d))|(?:(?<=\d)(?!\d))/)
       end.flatten
     end
     self
