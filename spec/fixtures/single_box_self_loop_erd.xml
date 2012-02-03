@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?><Drawing
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   name="Untitled" mark="4.5">
+
+<box id="3" name="Course" mark="0.0">
+  <location x="91.0" y="235.0"/>
+  <size width="80.0" height="40.0"/>
+  <comment></comment>
+</box>
+
+<selfLink id="5" mark="0.0">
+  <moveableName name="AssociatedWith">
+    <point x="71.0" y="200.0"/>
+  </moveableName>
+  <converseName name="converseName"/>
+  <box1 id="3"/>
+  <box2 id="3"/>
+  <cornerNo value="1"/>
+  <bendPoints>
+    <point x="91.0" y="235.0"/>
+    <point x="71.0" y="220.0"/>
+    <point x="91.0" y="235.0"/>
+  </bendPoints>
+  <midMoved value="false"/>
+  <box1EndAdornments blob="Closed" crowsfoot="Yes"/>
+  <box2EndAdornments blob="Open" crowsfoot="No"/>
+  <comment></comment>
+</selfLink>
+
+</Drawing>

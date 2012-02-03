@@ -1,25 +1,29 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    diff-lcs (1.1.2)
+    diff-lcs (1.1.3)
     graph.njae (0.2.3)
-    rake (0.9.2)
-    rdoc (3.7)
-    rspec (2.6.0)
-      rspec-core (~> 2.6.0)
-      rspec-expectations (~> 2.6.0)
-      rspec-mocks (~> 2.6.0)
-    rspec-core (2.6.4)
-    rspec-expectations (2.6.0)
+    json (1.6.5)
+    porter2stemmer (1.0.0)
+    rake (0.9.2.2)
+    rdoc (3.12)
+      json (~> 1.4)
+    rspec (2.8.0)
+      rspec-core (~> 2.8.0)
+      rspec-expectations (~> 2.8.0)
+      rspec-mocks (~> 2.8.0)
+    rspec-core (2.8.0)
+    rspec-expectations (2.8.0)
       diff-lcs (~> 1.1.2)
-    rspec-mocks (2.6.0)
+    rspec-mocks (2.8.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.0.0)
-  graph.njae (= 0.2.3)
+  bundler
+  graph.njae
+  porter2stemmer
   rake
   rdoc
-  rspec (~> 2.6.0)
+  rspec

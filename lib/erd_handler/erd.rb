@@ -10,7 +10,7 @@ module ErdHandler
       doc = Document.new(source)
       raise InvalidErdFile unless doc.elements.to_a.length == 1 and doc.elements[1].name.downcase == 'drawing'
       self.mark = doc.elements['Drawing'].attributes["mark"].to_f
-      self.name = doc.elements['Drawing'].attributes["name"]
+      self.name = Label.new doc.elements['Drawing'].attributes["name"]
       doc.elements.each('Drawing/box') do |box_element|
         self << Box.new(box_element)
       end

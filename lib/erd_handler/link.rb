@@ -9,7 +9,7 @@ module ErdHandler
     def read(link_element, vertices)
       self.id = link_element.attributes["id"].to_i
       self.mark = link_element.attributes["mark"].to_f
-      self.name = link_element.elements['moveableName'].attributes['name']
+      self.name = Label.new link_element.elements['moveableName'].attributes['name']
       box1 = vertices.select {|v| v.id == link_element.elements['box1'].attributes['id'].to_i}[0]
       box2 = vertices.select {|v| v.id == link_element.elements['box2'].attributes['id'].to_i}[0]
       self << box1 << box2
@@ -27,5 +27,6 @@ module ErdHandler
       c2.blob = link_element.elements['box2EndAdornments'].attributes['blob'].downcase.intern
       c2.crowsfoot = link_element.elements['box2EndAdornments'].attributes['crowsfoot'].downcase.intern
     end
+    
   end
 end

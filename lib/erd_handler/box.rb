@@ -8,7 +8,7 @@ module ErdHandler
     
     def read(box_element)
       self.id = box_element.attributes["id"].to_i
-      self.name = box_element.attributes["name"]
+      self.name = Label.new box_element.attributes["name"]
       self.mark = box_element.attributes["mark"].to_f
       
       self.x = box_element.elements["location"].attributes["x"].to_f
@@ -17,6 +17,15 @@ module ErdHandler
       self.height = box_element.elements["size"].attributes["height"].to_f
       self.comment = box_element.elements["comment"].text
       self
+    end
+    
+    def contains?(other)
+      self.x < other.x and self.x + self.width > other.x + other.width and 
+          self.y < other.y and self.y + self.height > other.y + other.height
+    end
+
+    def within?(other)
+      other.contains?(self)
     end
     
   end

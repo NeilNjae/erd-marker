@@ -6,9 +6,10 @@ source "http://rubygems.org"
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
 group :development do
-  gem "rspec", "~> 2.6.0"
-  gem "bundler", "~> 1.0.0"
+  gem "rspec"
+  gem "bundler"
   gem "rdoc"
   gem "rake"
-  gem "graph.njae", "0.2.3"
+  gem "graph.njae"
+  gem "porter2stemmer"
 end
