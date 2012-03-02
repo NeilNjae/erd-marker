@@ -2,13 +2,34 @@ require 'spec_helper'
 
 module ErdHandler
   describe Label do
+    describe '#initialize' do
+      it "should give an error if not given an original string" do
+        # Label.new.should raise_error(ArgumentError)
+        expect {Label.new}.to raise_error(ArgumentError)
+      end
+      
+      it "should create a copy of the original as the processed string" do
+        test_label = "Test label"
+        l1 = Label.new test_label
+        l1.original.should == test_label
+      end
+      
+      it "should tidy the processed string if asked" do
+        test_label = "testingLabeller string, he_pontificated"
+        l1 = Label.new test_label.dup, true
+        l2 = Label.new test_label.dup
+        l2.split.downcase.stem
+        l1.processed.should == l2.processed
+      end
+    end # initialze
+    
     describe '#original' do
       it "reports the string it was initialised with" do
         test_label = "Test label"
         l1 = Label.new test_label
         l1.original.should == test_label
-        l1 = Label.new
-        l1.original.should == ""
+        #l1 = Label.new
+        #l1.original.should == ""
       end
     end # original
 
@@ -147,13 +168,21 @@ module ErdHandler
       end
     end # tidy
     
+    describe "#length" do
+      it "returns the length of the processed label" do
+        l1 = Label.new "testingLabeller string, he_pontificated"
+        l1.tidy
+        l1.length.should == l1.processed.join('').length
+      end
+    end # length
+    
     describe "#levenshtein" do
       it "calculates the Levenshtein distance of the processed string" do
         l1 = Label.new "Fred"
         l1.levenshtein("Fred").should == 0
         l1.levenshtein("Free").should == 1
         l1.levenshtein("").should == 4
-        l2 = Label.new
+        l2 = Label.new ""
         l2.levenshtein("Free").should == 4
         l2.levenshtein("").should == 0
         l3 = Label.new "meilenstein"

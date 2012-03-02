@@ -22,5 +22,27 @@ module ErdHandler
       end
       self
     end
+    
+    # The minimal meaningful units of an ERD are:
+    #  Each box in isolation
+    #  Each link, with the associated boxes at its ends
+    def mmus
+      mmus = []
+      self.vertices.each do |b| 
+        mmu = Erd.new
+        mmu << b
+        mmus << mmu 
+      end
+      self.edges.each do |l| 
+        mmu = Erd.new
+        l.vertices.each do |b|
+          mmu << b
+        end
+        mmu << l
+        mmus << mmu
+      end
+      mmus
+    end
+    
   end
 end

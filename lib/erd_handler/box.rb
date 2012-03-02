@@ -28,5 +28,9 @@ module ErdHandler
       other.contains?(self)
     end
     
+    def similarity(other)
+      1.0 - self.name.edit_distance(other.name) / self.name.length.to_f
+    end
+    
   end
 end

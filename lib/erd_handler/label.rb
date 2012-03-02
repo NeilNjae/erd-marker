@@ -2,27 +2,22 @@ class Label
   
   attr_reader :original, :processed
   
-  def initialize(original = "")
+  def initialize(original, auto_tidy = false)
     @original = original
     @processed = [original]
+    self.tidy if auto_tidy
   end
   
   def split(opts = {})
+    regexp = /[\t\n _,.-]+/
+    split_camel_case = true
+    split_numbers = true
     if opts.class == Regexp
       regexp = opts
-      split_camel_case = true
     else
-      regexp = opts[:regexp] || /[\t\n _,.-]+/
-      if opts.has_key? :camel_case
-        split_camel_case = opts[:camel_case]
-      else
-        split_camel_case = true
-      end
-      if opts.has_key? :numbers
-        split_numbers = opts[:numbers]
-      else
-        split_numbers = true
-      end
+      regexp = opts[:rexexp] if opts.has_key? :regexp
+      split_camel_case = opts[:camel_case] if opts.has_key? :camel_case
+      split_numbers = opts[:numbers] if opts.has_key? :numbers
     end
     @processed = @processed.map do |segment|
       segment.split(regexp)
@@ -56,8 +51,12 @@ class Label
     self.split.downcase.stem
   end
   
+  def length
+    @processed.join('').length
+  end
+  
   def levenshtein(other_object)
-    if other_object.class == Label
+    if other_object.class.ancestors.include? Label
       other = other_object.processed.join('')
     else
       other = other_object
@@ -75,8 +74,8 @@ class Label
     (1..m).each do |i|
       (1..n).each do |j|
         d[i][j] = [d[i-1][j-1] + ((s[j-1] == other[i-1]) ? 0 : 1),  # substitution
-                   d[i-1][j] + 1, # deletion
-                   d[i][j-1] + 1  # addition
+                   d[i-1][j] + 1, # insertion
+                   d[i][j-1] + 1  # deletion
                    ].min
       end
     end

@@ -141,5 +141,62 @@ module ErdHandler
         l5.connections.find {|c| c.crowsfoot == :no}.end.should be b2
       end
     end # #read
+    
+    describe "#mmus" do
+      it "finds three MMUs in a simple ERD" do
+        erd = Erd.new
+        erd.read(File.new("spec/fixtures/two_boxes_one_link_erd.xml"))
+        mmus = erd.mmus
+        
+        mmus.should have(3).items
+        single_box_mmus = mmus.select {|m| m.vertices.length == 1}
+        single_link_mmus = mmus.select {|m| m.edges.length == 1}
+        
+        single_box_mmus.should have(2).items
+        single_box_mmus.each do |m|
+          m.should have(1).vertices
+          m.should have(0).edges
+        end
+        
+        single_link_mmus.should have(1).items
+        single_link_mmus.each do |m|
+          m.should have(2).vertices
+          m.should have(1).edges
+          m.edges.first.should have(2).connections
+          m.vertices.each do |v|
+            m.vertices.should include(v)
+          end
+        end
+      end
+      
+      it "finds many MMUs in a complex ERD" do
+        erd = Erd.new
+        erd.read(File.new("spec/fixtures/complex_erd.xml"))
+        mmus = erd.mmus
+        
+        mmus.should have(11).items
+        single_box_mmus = mmus.select {|m| m.vertices.length == 1}
+        single_link_mmus = mmus.select {|m| m.edges.length == 1}
+
+        single_box_mmus.should have(5).items
+        single_box_mmus.each do |m|
+          m.should have(1).vertices
+          m.should have(0).edges
+        end
+        single_box_mmus.map {|m| m.vertices.first.name.original}.uniq.should have(5).items
+        
+        single_link_mmus.should have(6).items
+        single_link_mmus.each do |m|
+          m.should have(2).vertices
+          m.should have(1).edges
+          m.edges.first.should have(2).connections
+          m.vertices.each do |v|
+            m.vertices.should include(v)
+          end
+        end
+        single_link_mmus.map {|m| m.edges.first.name.original}.uniq.should have(6).items
+      end
+
+    end # #mmus
   end
 end

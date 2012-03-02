@@ -36,7 +36,17 @@ module ErdHandler
         b1.within?(b3).should == false
         b3.within?(b1).should == false
       end
-    end # contains?
+    end # within?
+    
+    describe "#similarity" do
+      it "find the similarity of two boxes" do 
+        b1 = Box.new
+        b1.name = Label.new "box 1", true
+        b2 = Box.new
+        b2.name = Label.new "box 2", true
+        b1.similarity(b2).should be_within(0.005).of(0.75)
+      end
+    end
 
   end
 end
