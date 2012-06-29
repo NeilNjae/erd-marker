@@ -4,7 +4,7 @@ module ErdHandler
   describe Erd do
     let(:input) { double('input').as_null_object }
     let(:output) { double('output').as_null_object }
-    let(:erd) { Erd.new(input, output) }
+    let(:erd) { Erd.new(input) }
     
     describe "#initialize" do
       it "creates an empty ERD" do
