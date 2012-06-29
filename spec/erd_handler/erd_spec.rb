@@ -71,6 +71,20 @@ module ErdHandler
         c1.should_not == c2
       end
 
+      it "reads and creates an ERD with subclassing" do
+        erd = Erd.new
+        erd.read(File.new("spec/fixtures/two_boxes_one_contained_erd.xml"))
+        erd.mark.should == 4.5
+        erd.should have(2).vertices
+        erd.should have(0).edges
+
+        erd.vertices[0].should have(0).neighbours
+        erd.vertices[1].should have(0).neighbours
+        
+        erd.vertices[0].within?(erd.vertices[1]).should be(true)
+        erd.vertices[1].should be_contains(erd.vertices[0])
+      end
+      
       it "reads and creates full diagram" do
         erd = Erd.new
         erd.read(File.new("spec/fixtures/complex_erd.xml"))
