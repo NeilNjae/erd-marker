@@ -1,16 +1,18 @@
 require 'bundler/setup'
 
 require 'rexml/document'
-include REXML  
 
 require 'graph.njae'
 include GraphNjae
 
 require 'porter2stemmer'
+require 'logger'
 
-require 'erd_handler/label'
-require 'erd_handler/erd'
-require 'erd_handler/box'
-require 'erd_handler/link'
-require 'erd_handler/abstract_erd'
+require_relative 'erd_handler/exceptions'
+require_relative 'erd_handler/logger'
+require_relative 'erd_handler/label'
+require_relative 'erd_handler/erd'
+require_relative 'erd_handler/box'
+require_relative 'erd_handler/link'
+require_relative 'erd_handler/abstract_erd'
 

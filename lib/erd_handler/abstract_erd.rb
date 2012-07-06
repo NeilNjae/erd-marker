@@ -17,9 +17,12 @@ module ErdHandler
       end
       erd.edges.each do |e|
         link_vertex = AbstractEdge.new(e)
+        self << link_vertex
         e.connections.each do |c|
-          # find the abstract vertex at this end
-          # connect the abstract link to it
+          connection = AbstractConnection.new(c)
+          self << connection
+          self << link_vertex.connect(connection)
+          self << connection.connect(self.vertices.find {|v| v.base_vertex == c.end})
         end
       end
       self
@@ -27,9 +30,9 @@ module ErdHandler
   end
   
   class AbstractBox < Vertex
-    def initialize(souce = nil)
+    def initialize(source)
       super()
-      self.base_vertex = source unless source.nil?
+      self.base_vertex = source
       self
     end
   end
@@ -37,7 +40,15 @@ module ErdHandler
   class AbstractEdge < Vertex
     def initialize(source = nil)
       super()
-      self.base_vertex = source unless source.nil?
+      self.base_edge = source unless source.nil?
+      self
+    end
+  end
+  
+  class AbstractConnection < Vertex
+    def initialize(source = nil)
+      super()
+      self.base_connection = source unless source.nil?
       self
     end
   end

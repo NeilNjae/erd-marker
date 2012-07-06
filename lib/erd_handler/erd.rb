@@ -7,10 +7,11 @@ module ErdHandler
     end
     
     def read(source)
-      doc = Document.new(source)
-      raise InvalidErdFile unless doc.elements.to_a.length == 1 and doc.elements[1].name.downcase == 'drawing'
-      self.mark = doc.elements['Drawing'].attributes["mark"].to_f
-      self.name = Label.new doc.elements['Drawing'].attributes["name"]
+      doc = REXML::Document.new(source)
+      raise(InvalidErdFile, "#{source} doesn't contain a drawing element") unless doc.elements[1].name.downcase == 'drawing'
+      raise(InvalidErdFile, "#{source} doesn't have one drawing element") unless doc.elements.to_a.length == 1
+      self.mark = doc.elements['Drawing'].attributes['mark'].to_f
+      self.name = Label.new doc.elements['Drawing'].attributes['name']
       doc.elements.each('Drawing/box') do |box_element|
         self << Box.new(box_element)
       end
