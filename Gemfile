@@ -12,4 +12,5 @@ group :development do
   gem "rake"
   gem "graph.njae"
   gem "porter2stemmer"
+  gem 'simplecov', :require => false, :group => :test
 end
