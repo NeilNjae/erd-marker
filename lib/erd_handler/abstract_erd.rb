@@ -7,7 +7,7 @@ module ErdHandler
     end
     
     # Create an abstract ERD from a base ERD.
-    # An abstract ERD has an additional node for each link
+    # An abstract ERD has an additional vertex for each link and each end of the link
     def abstract(erd)
       self.mark = erd.mark
       self.name = erd.name
@@ -16,10 +16,10 @@ module ErdHandler
         # also do links for containment
       end
       erd.edges.each do |e|
-        link_vertex = AbstractEdge.new(e)
+        link_vertex = AbstractLink.new(e)
         self << link_vertex
         e.connections.each do |c|
-          connection = AbstractConnection.new(c)
+          connection = AbstractLinkEnd.new(c)
           self << connection
           self << link_vertex.connect(connection)
           self << connection.connect(self.vertices.find {|v| v.base_vertex == c.end})
@@ -30,25 +30,25 @@ module ErdHandler
   end
   
   class AbstractBox < Vertex
-    def initialize(source)
+    def initialize(source = nil)
       super()
-      self.base_vertex = source
+      self.base_vertex = source unless source.nil?
       self
     end
   end
   
-  class AbstractEdge < Vertex
+  class AbstractLink < Vertex
     def initialize(source = nil)
       super()
-      self.base_edge = source unless source.nil?
+      self.base_link = source unless source.nil?
       self
     end
   end
   
-  class AbstractConnection < Vertex
+  class AbstractLinkEnd < Vertex
     def initialize(source = nil)
       super()
-      self.base_connection = source unless source.nil?
+      self.base_link_end = source unless source.nil?
       self
     end
   end

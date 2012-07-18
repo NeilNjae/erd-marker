@@ -13,8 +13,6 @@ module ErdHandler
       box1 = vertices.select {|v| v.id == link_element.elements['box1'].attributes['id'].to_i}[0]
       box2 = vertices.select {|v| v.id == link_element.elements['box2'].attributes['id'].to_i}[0]
       self << box1 << box2
-      box1.edges << self
-      box2.edges << self unless box1 == box2
       if box1 == box2
         c1 = self.connections[0]
         c2 = self.connections[1]
